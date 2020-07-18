@@ -7,9 +7,14 @@
   >
     <div
       class="answer-letter-container h-100 mx-2 d-flex align-items-end justify-content-center"
-      *ngFor="let letter of uncoveredLetters"
+      *ngFor="let isRight of guessedRight; let idx = index"
     >
-      <h1 class="answer-letter">{{ letter }}</h1>
+      <div class="answer-letter-inner-container h-100" @openClose *ngIf="isRight">
+        <h1 class="answer-letter">{{ getLetterFromIdx(idx) | uppercase }}</h1>
+      </div>
     </div>
+  </div>
+  <div class="info-container position-absolute m-3">
+    <h3> {{ guessesLeft }} / 6</h3>
   </div>
 </div>

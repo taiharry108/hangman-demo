@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
 
   @HostListener('document:keypress', ['$event'])
   handleKeybaordEvent(event: KeyboardEvent) {
-    if (event.key.match(/[a-z]/i))
-      this.hangmanService.guessLetter(event.key);
+    if (event.key.match(/[a-zA-Z]/i))
+      this.hangmanService.guessLetter(event.key.toLowerCase());
   }
   title = 'hangman';
 }

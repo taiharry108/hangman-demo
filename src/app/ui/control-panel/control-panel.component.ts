@@ -31,4 +31,17 @@ export class ControlPanelComponent implements OnInit {
     return this.hangmanService.availableKeys.slice(19, 26);
   }
 
+  keyboardBtnClicked(key: string): void {
+    this.hangmanService.guessLetter(key);
+  }
+
+  letterGuessed(letter: string): boolean {
+    if (this.hangmanService.gameOver) return true;
+    return this.hangmanService.letterGuessed(letter);
+  }
+
+  restartGame(): void {
+    this.hangmanService.restartGame();
+  }
+
 }

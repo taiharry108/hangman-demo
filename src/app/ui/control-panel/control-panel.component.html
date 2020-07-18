@@ -1,9 +1,20 @@
-<div class="control-panel-container bg-dark h-auto mx-auto py-2 mt-3">
-  <div class="btn-row d-flex flex-row justify-content-center" *ngFor="let row of rowsOfKeys">
+<div class="control-panel-container bg-dark h-auto mx-auto py-2 mt-3 position-relative">
+  <div
+    class="btn-row d-flex flex-row justify-content-center"
+    *ngFor="let row of rowsOfKeys"
+  >
     <div class="btn-container m-2" *ngFor="let key of row">
-      <button type="button" class="keyboard-btn btn btn-secondary w-100 h-100">
-        {{ key.value }}
+      <button
+        type="button"
+        class="keyboard-btn btn btn-secondary w-100 h-100"
+        (click)="keyboardBtnClicked(key.value)"
+        [disabled]="letterGuessed(key.value)"
+      >
+        {{ key.value | uppercase }}
       </button>
     </div>
+  </div>
+  <div class="reset-btn-container position-absolute mb-3 mr-2">
+    <button type="button" class="reset-btn btn btn-primary" (click)="restartGame()">Restart</button>
   </div>
 </div>

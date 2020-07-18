@@ -16,7 +16,7 @@ export class HangmanService {
   private _words: string[];
   private _wordToGuess: string;
   private _guessedLetters: Set<string>;
-  private _uncoveredLetters: string[];
+  private _guessedRight: boolean[];
 
   constructor() {}
 
@@ -32,8 +32,14 @@ export class HangmanService {
   }
 
   wrongGuess(): void {
-    if (this._numOfWrongGuesses <= 5) this._numOfWrongGuesses += 1;
-    else this._gameOver = true;
+    if (!this._gameOver && this._numOfWrongGuesses < 6) {
+      console.log('wrong guess', this._numOfWrongGuesses);
+      this._numOfWrongGuesses += 1;
+      if (this._numOfWrongGuesses == 6) {
+        console.log('game is over!');
+        this._gameOver = true;
+      }
+    }
   }
 
   get numOfWrongGuesses(): number {
@@ -48,8 +54,8 @@ export class HangmanService {
     return [...this._availableKeys];
   }
 
-  get uncoveredLetters(): string[] {
-    return [...this._uncoveredLetters];
+  get guessedRight(): boolean[] {
+    return [...this._guessedRight];
   }
 
   restartGame(): void {
@@ -57,15 +63,16 @@ export class HangmanService {
     this._gameOver = false;
     this._wordToGuess = this._words[
       Math.floor(Math.random() * this._words.length)
-    ];    
+    ];
     this._wordToGuess = this._wordToGuess.toLowerCase();
     this._guessedLetters = new Set<string>();
-    this._uncoveredLetters = Array.from(this._wordToGuess, (s) => '');
-
-    console.log(this._wordToGuess, this._uncoveredLetters);
+    this._guessedRight = Array.from(this._wordToGuess, (s) => false);
+    console.log(this._wordToGuess, this._guessedRight);
   }
 
   guessLetter(letter: string): void {
+    if (this._gameOver) return;
+
     if (!this._guessedLetters.has(letter)) {
       this._guessedLetters.add(letter);
       if (this._wordToGuess.includes(letter)) {
@@ -73,10 +80,22 @@ export class HangmanService {
           (arr, e, i) => (e == letter && arr.push(i), arr),
           []
         );
-        idices.map((idx) => this._uncoveredLetters[idx] = this._wordToGuess[idx]);
+        idices.map((idx) => (this._guessedRight[idx] = true));
       } else {
         this.wrongGuess();
       }
     }
+  }
+
+  letterGuessed(letter: string): boolean {
+    return this._guessedLetters.has(letter);
+  }
+
+  get guessesLeft(): number {
+    return 6 - this._numOfWrongGuesses;
+  }
+
+  public getLetterFromIdx(idx: number): string {
+    return this._wordToGuess[idx];
   }
 }
