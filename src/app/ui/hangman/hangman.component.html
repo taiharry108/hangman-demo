@@ -1,4 +1,7 @@
-<div id="hangman" class="hangman-container bg-light h-50 mx-auto mt-3 position-relative">
+<div
+  id="hangman"
+  class="hangman-container bg-light h-50 mx-auto mt-3 position-relative"
+>
   <div class="hangman-image-container m-auto position-absolute">
     <img class="" src="assets/hangman.png" [ngStyle]="getImgStyle()" />
   </div>
@@ -9,12 +12,15 @@
       class="answer-letter-container h-100 mx-2 d-flex align-items-end justify-content-center"
       *ngFor="let isRight of guessedRight; let idx = index"
     >
-      <div class="answer-letter-inner-container h-100" @openClose *ngIf="isRight">
+      <div
+        class="answer-letter-inner-container h-100"
+        *ngIf="isRight"
+      >
         <h1 class="answer-letter">{{ getLetterFromIdx(idx) | uppercase }}</h1>
       </div>
     </div>
   </div>
   <div class="info-container position-absolute m-3">
-    <h3> {{ guessesLeft }} / 6</h3>
+    <h3>{{ guessesLeft }} / 6</h3>
   </div>
 </div>

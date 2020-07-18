@@ -19,6 +19,7 @@ export class HangmanService {
   private _guessedLetters: Set<string>;
   private _guessedRight: boolean[];
   private _won: boolean;
+  private _goingToRestartGame: boolean;
 
   constructor() {}
 
@@ -84,7 +85,7 @@ export class HangmanService {
     this._guessedLetters = new Set<string>();
     this._guessedRight = Array.from(this._wordToGuess, (s) => false);
     this._won = false;
-    console.log(this._wordToGuess, this._guessedRight);
+    this._goingToRestartGame = false;
   }
 
   guessLetter(letter: string): void {
@@ -114,5 +115,13 @@ export class HangmanService {
 
   getLetterFromIdx(idx: number): string {
     return this._wordToGuess[idx];
+  }
+
+  setGoingToRestartGame(): void {
+    this._goingToRestartGame = true;
+  }
+
+  get goingToRestartGame(): boolean {
+    return this._goingToRestartGame;
   }
 }

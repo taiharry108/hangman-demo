@@ -22,7 +22,7 @@ export class ResultComponent implements OnInit {
   }
 
   playAgainBtnClicked(): void {
-    this.hangmanService.restartGame();
+    this.hangmanService.setGoingToRestartGame();
   }
 
 }

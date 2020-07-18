@@ -1,31 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HangmanService } from 'src/app/hangman.service';
-import {
-  state,
-  style,
-  animate,
-  transition,
-  trigger,
-} from '@angular/animations';
 
 @Component({
   selector: 'app-hangman',
   templateUrl: './hangman.component.html',
   styleUrls: ['./hangman.component.scss'],
-  animations: [
-    trigger('openClose', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('1s', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('1s', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class HangmanComponent implements OnInit {
+  
   constructor(private hangmanSerivce: HangmanService) {}
 
   get numOfWrongGuesses(): number {
@@ -43,8 +25,7 @@ export class HangmanComponent implements OnInit {
     return imgStyle;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   buttonClicked(): void {
     this.hangmanSerivce.wrongGuess();
@@ -55,12 +36,7 @@ export class HangmanComponent implements OnInit {
     return this.hangmanSerivce.guessesLeft;
   }
 
-  innerContainerClass(active: boolean): string {
-    return active ? 'active' : '';
-  }
-
   public getLetterFromIdx(idx: number): string {
     return this.hangmanSerivce.getLetterFromIdx(idx);
   }
-
 }
