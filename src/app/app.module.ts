@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HangmanComponent } from './ui/hangman/hangman.component';
+import { ControlPanelComponent } from './ui/control-panel/control-panel.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HangmanComponent,
+    ControlPanelComponent
   ],
   imports: [
     BrowserModule,

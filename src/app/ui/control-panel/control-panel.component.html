@@ -1,0 +1,9 @@
+<div class="control-panel-container bg-dark h-auto mx-auto py-2 mt-3">
+  <div class="btn-row d-flex flex-row justify-content-center" *ngFor="let row of rowsOfKeys">
+    <div class="btn-container m-2" *ngFor="let key of row">
+      <button type="button" class="keyboard-btn btn btn-secondary w-100 h-100">
+        {{ key.value }}
+      </button>
+    </div>
+  </div>
+</div>

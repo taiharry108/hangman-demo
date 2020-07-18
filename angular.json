@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "hangman"
+    }
+  },
+  "defaultProject": "hangman",
+  "cli": {
+    "analytics": false
+  }
 }
