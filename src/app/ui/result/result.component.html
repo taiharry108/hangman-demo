@@ -1,0 +1,24 @@
+<div
+  class="modal fade"
+  id="resultModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="resultModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title m-auto" id="resultModalLongTitle">
+          You {{ won ? "Win" : "Lose" }}!
+        </h1>
+      </div>
+      <div class="modal-body m-auto">
+        <h3>The answer is <span class="answer" [ngClass]="won ? 'text-success' : 'text-danger'">{{ wordToGuess | uppercase }}</span></h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="playAgainBtnClicked()">Play Again</button>        
+      </div>
+    </div>
+  </div>
+</div>

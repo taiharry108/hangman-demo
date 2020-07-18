@@ -36,12 +36,11 @@ export class ControlPanelComponent implements OnInit {
   }
 
   letterGuessed(letter: string): boolean {
-    if (this.hangmanService.gameOver) return true;
+    if (this.hangmanService.gameOver || this.hangmanService.won) return true;
     return this.hangmanService.letterGuessed(letter);
   }
 
   restartGame(): void {
     this.hangmanService.restartGame();
   }
-
 }

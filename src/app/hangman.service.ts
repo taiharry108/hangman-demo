@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { words } from './words';
+declare var $: any;
 
 export interface KeyboardKey {
   value: string;
@@ -17,10 +18,12 @@ export class HangmanService {
   private _wordToGuess: string;
   private _guessedLetters: Set<string>;
   private _guessedRight: boolean[];
+  private _won: boolean;
 
   constructor() {}
 
   initService(): void {
+    console.log('init...');
     const chars = 'qwertyuiopasdfghjklzxcvbnm';
     this._availableKeys = Array.from(chars).map(
       (s): KeyboardKey => {
@@ -28,6 +31,7 @@ export class HangmanService {
       }
     );
     this._words = words;
+    this._won = false;
     this.restartGame();
   }
 
@@ -36,8 +40,8 @@ export class HangmanService {
       console.log('wrong guess', this._numOfWrongGuesses);
       this._numOfWrongGuesses += 1;
       if (this._numOfWrongGuesses == 6) {
-        console.log('game is over!');
         this._gameOver = true;
+        $('#resultModalCenter').modal();
       }
     }
   }
@@ -58,6 +62,18 @@ export class HangmanService {
     return [...this._guessedRight];
   }
 
+  get guessesLeft(): number {
+    return 6 - this._numOfWrongGuesses;
+  }
+
+  get won(): boolean {
+    return this._won;
+  }
+
+  get wordToGuess(): string {
+    return this._wordToGuess;
+  }
+
   restartGame(): void {
     this._numOfWrongGuesses = 0;
     this._gameOver = false;
@@ -67,11 +83,12 @@ export class HangmanService {
     this._wordToGuess = this._wordToGuess.toLowerCase();
     this._guessedLetters = new Set<string>();
     this._guessedRight = Array.from(this._wordToGuess, (s) => false);
+    this._won = false;
     console.log(this._wordToGuess, this._guessedRight);
   }
 
   guessLetter(letter: string): void {
-    if (this._gameOver) return;
+    if (this._gameOver || this._won) return;
 
     if (!this._guessedLetters.has(letter)) {
       this._guessedLetters.add(letter);
@@ -81,6 +98,10 @@ export class HangmanService {
           []
         );
         idices.map((idx) => (this._guessedRight[idx] = true));
+        this._won = this._guessedRight.reduce(
+          (prev, current) => prev && current
+        );
+        if (this._won) $('#resultModalCenter').modal();
       } else {
         this.wrongGuess();
       }
@@ -91,11 +112,7 @@ export class HangmanService {
     return this._guessedLetters.has(letter);
   }
 
-  get guessesLeft(): number {
-    return 6 - this._numOfWrongGuesses;
-  }
-
-  public getLetterFromIdx(idx: number): string {
+  getLetterFromIdx(idx: number): string {
     return this._wordToGuess[idx];
   }
 }
